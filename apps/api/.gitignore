@@ -1,0 +1,7 @@
+# API
+
+dist
+node_modules
+*.tsbuildinfo
+.env
+.env.*
