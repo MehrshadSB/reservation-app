@@ -1,5 +1,5 @@
 import { Global, Module } from "@nestjs/common";
-import { HealthController } from "./presentation/health.controller";
+import { HealthController } from "./health.controller";
 
 /**
  * Cross-cutting Nest providers (tenant context, guards, filters).

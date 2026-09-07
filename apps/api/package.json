@@ -15,7 +15,7 @@
     "@nestjs/platform-express": "^11.1.29",
     "@repo/config": "*",
     "@repo/database": "*",
-    "@repo/types": "*",
+    "@repo/contracts": "*",
     "@repo/utils": "*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2"

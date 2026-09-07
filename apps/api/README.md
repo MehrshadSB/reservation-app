@@ -1,7 +1,6 @@
 # API — NestJS modular monolith
 
-Single NestJS process. Domain logic lives in `src/modules`. Each folder is a
-Nest module (`*.module.ts`) with layered internals.
+Single NestJS process. Domain logic lives in `src/modules`.
 
 This app is not a microservice host. Modules communicate in-process through
 Nest providers. A module can be extracted later only after its boundary has
@@ -11,17 +10,14 @@ proven stable.
 
 - `app.module.ts` — composition root
 - `modules/registry.ts` — core and extension module lists
-- `modules/<domain>/<domain>.module.ts` — Nest module boundary
-- `modules/<domain>/domain` — entities and rules (no Nest decorators)
-- `modules/<domain>/application` — use cases and ports
-- `modules/<domain>/infrastructure` — database and adapters
-- `modules/<domain>/presentation` — Nest controllers
+- `modules/booking`, `availability`, `resource` — layered (domain / application / infrastructure / presentation)
+- other modules — flat Nest files (controller, service, repository, dto)
 - `shared` — tenant context, guards, filters, health
 
 ## Package consumption
 
 - `@repo/database` — persistence client and tenant scoping
-- `@repo/types` — cross-app contracts
+- `@repo/contracts` — HTTP contracts shared with Next.js apps
 - `@repo/config` — env and shared settings
 - `@repo/utils` — generic helpers
 

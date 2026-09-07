@@ -17,7 +17,7 @@ packages/
   config/         Shared env and app config
   database/       Persistence client (API only)
   eslint-config/  Shared ESLint
-  types/          Cross-app TypeScript contracts
+  contracts/      Cross-app HTTP/API contracts
   typescript-config/
   ui/             Shared React design system
   utils/          Generic helpers
@@ -42,8 +42,8 @@ npm run dev
 
 ## Package graph
 
-- Next.js apps depend on `@repo/ui`, `@repo/types`, `@repo/config`, `@repo/utils`
-- API depends on `@repo/database`, `@repo/types`, `@repo/config`, `@repo/utils`
+- Next.js apps depend on `@repo/ui`, `@repo/contracts`, `@repo/config`, `@repo/utils`
+- API depends on `@repo/database`, `@repo/contracts`, `@repo/config`, `@repo/utils`
 - Frontends never import `@repo/database`
 
 See `apps/README.md` and `packages/README.md` for ownership rules.

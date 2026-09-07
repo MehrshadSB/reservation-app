@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@repo/config": "*",
-    "@repo/types": "*",
+    "@repo/contracts": "*",
     "@repo/ui": "*",
     "@repo/utils": "*",
     "next": "16.3.4",

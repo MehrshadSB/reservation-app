@@ -2,6 +2,9 @@
 
 Generic reservation engine. Industry-agnostic by design.
 
+This is a Booking Core module, so it keeps domain / application /
+infrastructure / presentation folders.
+
 A booking is: a customer books a service, requiring one or more resources,
 during a time range, under booking rules.
 

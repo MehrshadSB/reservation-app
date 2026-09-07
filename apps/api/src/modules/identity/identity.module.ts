@@ -1,13 +1,14 @@
 import { Module } from "@nestjs/common";
+import { IdentityController } from "./identity.controller";
+import { IdentityRepository } from "./identity.repository";
+import { IdentityService } from "./identity.service";
 
 /**
- * Authentication, platform/staff users, roles, and permissions.
- *
- * Domain code in `domain/` stays free of NestJS decorators.
+ * Authentication, users, roles, and permissions.
  */
 @Module({
-  controllers: [],
-  providers: [],
-  exports: [],
+  controllers: [IdentityController],
+  providers: [IdentityService, IdentityRepository],
+  exports: [IdentityService],
 })
 export class IdentityModule {}

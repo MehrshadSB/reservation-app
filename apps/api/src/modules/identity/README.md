@@ -2,6 +2,6 @@
 
 Authentication, platform/staff users, roles, and permissions.
 
-Staff accounts that operate a tenant belong here. End customers who book
-appointments belong in `customer/`. Organization membership (which user
-belongs to which tenant) is coordinated with `organization/`.
+Flat Nest module. Staff accounts that operate a tenant belong here.
+End customers who book belong in `customer/`. Organization membership
+is coordinated with `organization/`.
