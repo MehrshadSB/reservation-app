@@ -6,7 +6,8 @@
   "exports": {
     "./booking": "./src/booking/index.ts",
     "./organization": "./src/organization/index.ts",
-    "./customer": "./src/customer/index.ts"
+    "./customer": "./src/customer/index.ts",
+    "./travel": "./src/travel/index.ts"
   },
   "scripts": {
     "check-types": "tsc --noEmit",

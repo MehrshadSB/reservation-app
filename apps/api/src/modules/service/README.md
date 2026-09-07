@@ -1,9 +1,11 @@
 # Service
 
-The bookable offering: consultation, overnight stay, haircut, vehicle rental.
+Optional catalog of named products some industries sell (haircut,
+consultation). Flat Nest module.
 
-Flat Nest module. A service declares which resource types it needs and how
-it is booked. It does not encode an industry.
+This is **not** what Booking Core reserves. Booking Core reserves a
+`BookableOfferingRef`. Travel does not use this module — `Tour` is Travel's
+product definition.
 
-The Nest provider is named `ServiceCatalogService` so it does not clash
-with the folder/module name.
+A future salon or healthcare module may map Service + Resource + a slot
+into a `BookableSnapshot` and call `BookingService`.

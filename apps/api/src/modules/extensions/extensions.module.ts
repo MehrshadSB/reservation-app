@@ -1,12 +1,11 @@
 import { Module } from "@nestjs/common";
+import { TravelModule } from "../travel/travel.module";
 
 /**
- * Industry extensions (hotel, healthcare, salon, rental, events).
- *
- * Import those Nest modules here when they exist. They compose Booking Core
- * through ports — they never add `if (businessType === ...)` to core modules.
+ * Industry extensions. They compose Booking Core through exported facades
+ * and never add `if (businessType === ...)` to core modules.
  */
 @Module({
-  imports: [],
+  imports: [TravelModule],
 })
 export class ExtensionsModule {}

@@ -1,12 +1,9 @@
 # Resource
 
-Anything that can be reserved: a person, room, vehicle, chair, court, or
-equipment unit.
+Generic occupiable unit: person, room, vehicle, chair, court.
 
-This is a Booking Core module, so it keeps domain / application /
-infrastructure / presentation folders.
+This is a Booking Core helper for industries that book exclusive occupancy.
+Travel's first path (`CAPACITY` on a tour departure) does not use resources.
 
-Resources are generic. A "doctor" or "hotel room" is a resource (plus
-industry extension data), not a different core entity. A person who works
-for the tenant may later also live in a staff module; booking still
-occupies a resource.
+A future car-rental or meeting-room module may occupy a resource and map
+that occupancy to a `BookableSnapshot` with mode `EXCLUSIVE_RESOURCE`.

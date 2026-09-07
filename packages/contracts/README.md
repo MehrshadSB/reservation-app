@@ -6,6 +6,7 @@ Import a domain slice, not the whole package:
 
 ```ts
 import type { CreateBookingRequest } from "@repo/contracts/booking";
+import type { CreateTravelBookingRequest } from "@repo/contracts/travel";
 ```
 
 ## What belongs here

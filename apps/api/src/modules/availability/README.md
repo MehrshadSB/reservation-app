@@ -1,10 +1,14 @@
 # Availability
 
-When a resource or service can be booked: schedules, exceptions, and
-capacity over a time range.
+Generic inventory engine for bookable offerings. Separate from Booking.
 
-This is a Booking Core module, so it keeps domain / application /
-infrastructure / presentation folders.
+Booking asks: can this offering be reserved? This module answers with yes/no,
+remaining capacity, and (later) slots or date ranges.
 
-Booking Core asks this module whether a proposed TimeRange is free. It
-does not embed calendar rules itself.
+Industry modules **register** inventory when they publish an occurrence.
+Booking Core **checks / reserves / releases** through `AvailabilityPort`.
+This module never imports Booking or Travel.
+
+A tour departure, a doctor slot, and a hotel stay all register the same
+`AvailabilityInventory` shape. Strategies differ by `BookingMode`, not by
+industry type.

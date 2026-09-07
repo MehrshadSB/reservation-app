@@ -10,7 +10,8 @@ proven stable.
 
 - `app.module.ts` — composition root
 - `modules/registry.ts` — core and extension module lists
-- `modules/booking`, `availability`, `resource` — layered (domain / application / infrastructure / presentation)
+- `modules/booking`, `availability` — layered Booking Core
+- `modules/travel` — first industry vertical (tours), registered as an extension
 - other modules — flat Nest files (controller, service, repository, dto)
 - `shared` — tenant context, guards, filters, health
 

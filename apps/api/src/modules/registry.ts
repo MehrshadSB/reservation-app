@@ -13,8 +13,8 @@ import { ServiceModule } from "./service/service.module";
 /**
  * NestJS module registry for the modular monolith.
  *
- * Industry extensions register through `extensionModules` so Booking Core
- * stays generic.
+ * Industry verticals (Travel first) register through `extensionModules`
+ * so Booking Core stays generic.
  */
 export const coreModules = [
   IdentityModule,

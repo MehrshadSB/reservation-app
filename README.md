@@ -1,9 +1,10 @@
 # Reservation Platform
 
 Generic, multi-tenant reservation and booking platform. It is not built for
-one industry. Doctors, hotels, salons, rentals, and consultants all book
-through the same Booking Core: a customer books a service that requires
-one or more resources during a time range, under booking rules.
+one industry. A customer books a **bookable offering** during a time range,
+consuming capacity or availability. The first vertical is Travel & Tours:
+a Tour Departure becomes that offering. Hotels, healthcare, and rentals
+will map their own occurrences the same way without changing Booking Core.
 
 ## Layout
 
@@ -47,4 +48,5 @@ npm run dev
 - Frontends never import `@repo/database`
 
 See `apps/README.md` and `packages/README.md` for ownership rules.
-Industry extensions will live in `apps/api/src/modules/extensions`.
+Industry verticals are registered via `modules/extensions`. Travel is the
+first one (`apps/api/src/modules/travel`).

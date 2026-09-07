@@ -1,10 +1,17 @@
 # Industry extensions
 
-Future Nest modules such as `hotel`, `healthcare`, `salon`, `rental`, and
-`events` belong here.
+Verticals compose Booking Core. They never patch it with industry
+conditionals.
 
-Import them from `extensions.module.ts`. They compose Booking Core through
-ports and application services.
+The first vertical is `../travel`, imported from `extensions.module.ts`.
 
-They must not change Booking Core. Do not create these folders until the
-first industry workflow is built.
+Future siblings follow the same pattern:
+
+```text
+modules/hotel/        → Room stay  → BookableSnapshot → BookingService
+modules/healthcare/   → Slot       → BookableSnapshot → BookingService
+modules/salon/        → Appointment → BookableSnapshot → BookingService
+```
+
+Register new verticals here and in `registry.ts` `extensionModules`.
+Do not add them to `coreModules`.

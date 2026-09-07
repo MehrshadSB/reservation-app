@@ -1,46 +1,78 @@
-# Core modules
+# Modules
 
 Each folder is a NestJS domain module. Import boundaries are declared in
-`<domain>.module.ts`. Modules talk through exported services, not by
-reaching into another module's database tables.
+`<domain>.module.ts`. Modules talk through exported facades (`BookingService`,
+`AvailabilityService`), not by reaching into another module's tables.
 
-Industry-specific Nest modules belong in `extensions/`, never inside these
-folders.
+## Dependency direction
 
-## When to use layers
+```text
+travel  →  booking  →  availability
+travel  →  availability          (register inventory on publish)
+booking  ↛  travel
+availability  ↛  travel
+availability  ↛  booking
+```
 
-Only Booking Core modules use Clean Architecture folders:
+Industry modules are registered in `extensionModules`, never in `coreModules`.
+
+## Layers
+
+Use Clean Architecture folders only where invariants are real:
 
 - `booking/`
 - `availability/`
-- `resource/`
+- `travel/tours/` and `travel/departures/` (product vs occurrence)
 
-Those have real invariants (time, capacity, occupancy). Layers there:
+Those layers:
 
 - `domain` — entities, value objects, invariants (framework-free)
-- `application` — use cases and ports
+- `application` — use cases, ports, mappers
 - `infrastructure` — adapters that implement ports
 - `presentation` — Nest controllers
 
-## Simple modules
+Everything else stays flat (`customer/`, `travel/destinations/`, …).
 
-Everything else stays flat:
+## Tree
 
 ```text
-customer/
-  customer.module.ts
-  customer.controller.ts
-  customer.service.ts
-  customer.repository.ts
-  customer.types.ts
-  dto/
+modules/
+├── booking/                 # generic reservation engine
+│   ├── domain/
+│   │   ├── entities/
+│   │   ├── value-objects/
+│   │   ├── rules/
+│   │   └── events/
+│   ├── application/
+│   │   ├── ports/
+│   │   └── use-cases/
+│   ├── infrastructure/
+│   └── presentation/
+├── availability/            # generic inventory engine
+│   ├── domain/
+│   │   ├── entities/
+│   │   └── strategies/
+│   ├── application/
+│   ├── infrastructure/
+│   └── presentation/
+├── customer/
+├── identity/
+├── organization/
+├── payment/
+├── notification/
+├── analytics/
+├── service/                 # optional catalog; not the booking target
+├── resource/                # optional occupancy helper
+├── extensions/              # composes verticals
+└── travel/                  # first industry vertical
+    ├── tours/
+    ├── departures/
+    ├── destinations/
+    ├── itineraries/
+    └── travelers/
 ```
 
-Do not add `application/domain/infrastructure/presentation` for tags,
-settings, or other small features. Promote a module to layers only after
-the rules get hard to keep in a service.
-
-Domain types stay in the module (`*.types.ts`). HTTP shapes shared with
-frontends go in `@repo/contracts/<domain>`, never in a global type dump.
+Domain types stay in the module. HTTP shapes shared with frontends go in
+`@repo/contracts/<domain>`.
 
 Register new modules in `registry.ts` so `AppModule` stays a thin composer.

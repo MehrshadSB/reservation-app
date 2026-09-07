@@ -1,7 +1,8 @@
 # Booking application
 
-Use cases (create, confirm, cancel, reschedule) and ports.
+Use cases and ports. This is the extension seam.
 
-`ports/` is the extension seam: persistence, availability checks, and
-future pricing/capability strategies. Industry modules implement extra
-ports; they do not fork these use cases with business-type conditionals.
+- `BookingService` — facade industry modules call
+- `ports/availability.port.ts` — Booking asks Availability; does not import it
+- `ports/booking-repository.port.ts` — persistence
+- Industry modules compose these use cases. They never fork them with `if (businessType)`.
