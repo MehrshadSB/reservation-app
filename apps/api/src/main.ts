@@ -1,10 +1,16 @@
 import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
+import { loadAuthRuntimeConfig } from "./shared/platform-env";
 import { AppModule } from "./app.module";
 
 async function bootstrap(): Promise<void> {
+  const config = loadAuthRuntimeConfig();
   const app = await NestFactory.create(AppModule);
-  const port = Number(process.env.API_PORT ?? 4000);
+  app.enableCors({
+    origin: config.allowedRedirectOrigins,
+    credentials: true,
+  });
+  const port = config.apiPort;
   await app.listen(port);
 }
 

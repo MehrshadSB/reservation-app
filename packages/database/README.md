@@ -10,7 +10,6 @@ Persistence boundary for the modular monolith.
 
 ## Consumers
 
-Only `apps/api` may depend on this package. Next.js apps use the API.
-
-Repository implementations in `apps/api/src/modules/*/infrastructure`
-import the client from here. Domain modules never import the ORM directly.
+Only `apps/api` and `apps/auth` may depend on this package. Next.js apps
+use HTTP. Auth owns identity/session writes; the API reads sessions through
+Auth introspection until a shared database exists.

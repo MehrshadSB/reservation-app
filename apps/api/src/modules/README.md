@@ -56,7 +56,7 @@ modules/
 │   ├── infrastructure/
 │   └── presentation/
 ├── customer/
-├── identity/
+├── identity/                # API session consumer + guards (OTP lives in apps/auth)
 ├── organization/
 ├── payment/
 ├── notification/

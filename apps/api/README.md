@@ -14,6 +14,8 @@ proven stable.
 - `modules/travel` — first industry vertical (tours), registered as an extension
 - other modules — flat Nest files (controller, service, repository, dto)
 - `shared` — tenant context, guards, filters, health
+- Authentication is owned by `apps/auth`. This API introspects sessions
+  and enforces permissions.
 
 ## Package consumption
 

@@ -1,14 +1,23 @@
-import { Module } from "@nestjs/common";
-import { IdentityController } from "./identity.controller";
-import { IdentityRepository } from "./identity.repository";
-import { IdentityService } from "./identity.service";
+import { Global, Module } from "@nestjs/common";
+import { APP_GUARD } from "@nestjs/core";
+import { AuthIntrospectionClient } from "./infrastructure/auth-introspection.client";
+import { AuthenticationGuard } from "./guards/authentication.guard";
+import { AuthorizationGuard } from "./guards/authorization.guard";
+import { CookieOriginGuard } from "./guards/cookie-origin.guard";
+import { MeController } from "./presentation/me.controller";
 
 /**
- * Authentication, users, roles, and permissions.
+ * Consumes Auth sessions. Does not implement OTP or login.
  */
+@Global()
 @Module({
-  controllers: [IdentityController],
-  providers: [IdentityService, IdentityRepository],
-  exports: [IdentityService],
+  controllers: [MeController],
+  providers: [
+    AuthIntrospectionClient,
+    AuthenticationGuard,
+    AuthorizationGuard,
+    { provide: APP_GUARD, useClass: CookieOriginGuard },
+  ],
+  exports: [AuthIntrospectionClient, AuthenticationGuard, AuthorizationGuard],
 })
 export class IdentityModule {}

@@ -1,5 +1,7 @@
-/**
- * Identity types local to this module.
- * Cross-app HTTP contracts belong in `@repo/contracts`.
- */
-export {};
+import type { SessionIntrospection } from "@repo/contracts/auth";
+import type { Request } from "express";
+
+export type AuthenticatedRequest = Request & {
+  auth?: SessionIntrospection;
+  tenantId?: string;
+};
