@@ -1,7 +1,0 @@
-# Auth
-
-dist
-node_modules
-*.tsbuildinfo
-.env
-.env.*

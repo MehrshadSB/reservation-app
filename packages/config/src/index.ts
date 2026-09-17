@@ -6,7 +6,6 @@ export {
   type PlatformUrls,
 } from "./urls.js";
 export {
-  buildLoginUrl,
   isAllowedRedirect,
   loadAuthRuntimeConfig,
   type AuthRuntimeConfig,

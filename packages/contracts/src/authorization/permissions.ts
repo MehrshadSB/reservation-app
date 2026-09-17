@@ -1,28 +1,27 @@
 /**
  * Central permission catalog. Business code must import from here
  * instead of scattering permission strings.
+ *
+ * Derived from the modules that exist in the API today.
  */
 export const PERMISSIONS = {
-  BOOKING_READ: "booking.read",
-  BOOKING_CREATE: "booking.create",
-  BOOKING_UPDATE: "booking.update",
-  BOOKING_CANCEL: "booking.cancel",
-  BOOKING_MANAGE: "booking.manage",
+  ORGANIZATION_READ: "organization.read",
+  ORGANIZATION_UPDATE: "organization.update",
+  CUSTOMER_READ: "customer.read",
+  CUSTOMER_CREATE: "customer.create",
+  CUSTOMER_UPDATE: "customer.update",
   TOUR_READ: "tour.read",
   TOUR_CREATE: "tour.create",
   TOUR_UPDATE: "tour.update",
   TOUR_DELETE: "tour.delete",
-  TOUR_MANAGE: "tour.manage",
-  ORGANIZATION_READ: "organization.read",
-  ORGANIZATION_UPDATE: "organization.update",
-  ORGANIZATION_MANAGE: "organization.manage",
-  CUSTOMER_READ: "customer.read",
-  CUSTOMER_CREATE: "customer.create",
-  CUSTOMER_UPDATE: "customer.update",
-  CUSTOMER_MANAGE: "customer.manage",
-  PLATFORM_IDENTITIES_READ: "platform.identities.read",
-  PLATFORM_ORGANIZATIONS_MANAGE: "platform.organizations.manage",
-  PLATFORM_SUPPORT: "platform.support",
+  DEPARTURE_READ: "departure.read",
+  DEPARTURE_CREATE: "departure.create",
+  DEPARTURE_UPDATE: "departure.update",
+  DEPARTURE_PUBLISH: "departure.publish",
+  BOOKING_READ: "booking.read",
+  BOOKING_CREATE: "booking.create",
+  BOOKING_CONFIRM: "booking.confirm",
+  BOOKING_CANCEL: "booking.cancel",
 } as const;
 
 export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];

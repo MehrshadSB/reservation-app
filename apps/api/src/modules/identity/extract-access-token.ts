@@ -1,21 +1,4 @@
-export function parseCookies(header: string | undefined): Record<string, string> {
-  if (!header) {
-    return {};
-  }
-  const out: Record<string, string> = {};
-  for (const part of header.split(";")) {
-    const index = part.indexOf("=");
-    if (index === -1) {
-      continue;
-    }
-    const key = part.slice(0, index).trim();
-    const value = part.slice(index + 1).trim();
-    if (key.length > 0) {
-      out[key] = decodeURIComponent(value);
-    }
-  }
-  return out;
-}
+import { parseCookies } from "./infrastructure/cookies";
 
 export function extractAccessToken(input: {
   cookieHeader?: string;

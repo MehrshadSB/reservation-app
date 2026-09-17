@@ -1,15 +1,13 @@
-# Identity (API consumer)
+# Identity
 
-This module does **not** authenticate users. OTP, login, and session
-issuance live in `apps/auth`.
+Authentication and authorization for the API process.
 
-The API:
+```text
+Phone → OTP → Identity → Session cookie
+Authenticated user → organization membership → role → permission
+```
 
-1. Reads the session cookie or Bearer token
-2. Introspects the session against Auth
-3. Attaches `AuthenticatedIdentity` and `AuthorizationContext`
-4. Checks `can(context, permission, organizationId)`
-
-Use `@UseGuards(AuthenticationGuard, AuthorizationGuard)` and
-`@RequirePermission(PERMISSIONS.BOOKING_CANCEL)` on protected routes.
-Never import Auth OTP internals from Booking, Travel, or Availability.
+Staff routes use `@UseGuards(AuthenticationGuard, AuthorizationGuard)` and
+`@RequirePermission(PERMISSIONS.BOOKING_CONFIRM)`. Send `x-organization-id`
+for the tenant. Other modules should depend on `AuthenticatedUser` and
+`TenantContext`, not OTP or session storage.

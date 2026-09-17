@@ -1,47 +1,38 @@
 import { cookies } from "next/headers";
-import { getAuthUrl, getLogoutUrl, SESSION_COOKIE } from "../lib/sso";
+import type { CurrentUserResponse } from "@repo/contracts/identity";
+import { SignOutButton } from "../components/sign-out-button";
+import { getApiUrl, SESSION_COOKIE } from "../lib/auth";
 
-type SessionPayload = {
-  identity: {
-    identityId: string;
-    phoneNumber: string;
-  };
-  authorization: {
-    platformRoles: string[];
-  };
-};
-
-async function loadSession(): Promise<SessionPayload | undefined> {
+async function loadCurrentUser(): Promise<CurrentUserResponse | undefined> {
   const jar = await cookies();
   const token = jar.get(SESSION_COOKIE)?.value;
   if (!token) {
     return undefined;
   }
-  const response = await fetch(`${getAuthUrl()}/v1/sessions/current`, {
+  const response = await fetch(`${getApiUrl()}/v1/me`, {
     headers: { cookie: `${SESSION_COOKIE}=${token}` },
     cache: "no-store",
   });
   if (!response.ok) {
     return undefined;
   }
-  return (await response.json()) as SessionPayload;
+  return (await response.json()) as CurrentUserResponse;
 }
 
 export default async function Home() {
-  const session = await loadSession();
-  const logoutUrl = getLogoutUrl("http://localhost:3002/");
+  const current = await loadCurrentUser();
 
   return (
     <main>
       <h1>Admin</h1>
       <p>Platform super-admin application.</p>
-      {session ? (
+      {current ? (
         <section>
-          <p>Signed in as {session.identity.phoneNumber}</p>
+          <p>Signed in as {current.user.phone}</p>
           <p>
-            Platform roles: {session.authorization.platformRoles.join(", ") || "none"}
+            Platform admin: {current.isPlatformAdmin ? "yes" : "no"}
           </p>
-          <a href={logoutUrl}>Sign out</a>
+          <SignOutButton />
         </section>
       ) : (
         <p>No active session.</p>

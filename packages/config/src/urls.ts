@@ -2,7 +2,6 @@ export type AppClientId = "dashboard" | "admin" | "booking";
 
 export type PlatformUrls = {
   apiUrl: string;
-  authUrl: string;
   dashboardUrl: string;
   bookingUrl: string;
   adminUrl: string;
@@ -16,7 +15,6 @@ export function readUrl(name: string, fallback: string): string {
 export function loadPlatformUrls(): PlatformUrls {
   return {
     apiUrl: readUrl("API_URL", "http://localhost:4000"),
-    authUrl: readUrl("AUTH_URL", "http://localhost:4001"),
     dashboardUrl: readUrl("DASHBOARD_URL", "http://localhost:3000"),
     bookingUrl: readUrl("BOOKING_URL", "http://localhost:3001"),
     adminUrl: readUrl("ADMIN_URL", "http://localhost:3002"),

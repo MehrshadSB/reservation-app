@@ -1,7 +1,8 @@
-import type { SessionIntrospection } from "@repo/contracts/auth";
+import type { AuthenticatedUser } from "@repo/contracts/identity";
 import type { Request } from "express";
+import type { TenantContext } from "../../shared/kernel/tenant-context";
 
 export type AuthenticatedRequest = Request & {
-  auth?: SessionIntrospection;
-  tenantId?: string;
+  user?: AuthenticatedUser;
+  tenant?: TenantContext;
 };

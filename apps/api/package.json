@@ -6,6 +6,7 @@
     "dev": "nest start --watch",
     "build": "nest build",
     "start": "node dist/main.js",
+    "test": "tsx --test test/authorization.can.spec.ts test/identity.auth.spec.ts test/identity.rbac.spec.ts test/identity.profile.spec.ts",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
   },
@@ -14,8 +15,8 @@
     "@nestjs/core": "^11.1.29",
     "@nestjs/platform-express": "^11.1.29",
     "@repo/config": "*",
-    "@repo/database": "*",
     "@repo/contracts": "*",
+    "@repo/database": "*",
     "@repo/utils": "*",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.2"
@@ -28,6 +29,7 @@
     "@types/express": "^5.0.3",
     "@types/node": "26.4.1",
     "eslint": "10.9.1",
+    "tsx": "^4.23.13",
     "typescript": "^6.0.2"
   }
 }

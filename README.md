@@ -27,6 +27,9 @@ packages/
 Business logic lives in `apps/api/src/modules`. Shared packages exist only
 for real reuse across applications. Domain packages are not split out yet.
 
+Authentication lives in `apps/api` (`modules/identity`): phone OTP, HttpOnly
+sessions, and organization RBAC.
+
 ## Commands
 
 ```sh

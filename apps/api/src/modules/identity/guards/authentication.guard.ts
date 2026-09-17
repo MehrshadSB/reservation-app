@@ -2,40 +2,44 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
-  ServiceUnavailableException,
   UnauthorizedException,
 } from "@nestjs/common";
-import { loadAuthRuntimeConfig } from "../../../shared/platform-env";
-import { AuthIntrospectionClient } from "../infrastructure/auth-introspection.client";
+import { IdentityService } from "../application/identity.service";
+import { SessionService } from "../application/session.service";
 import { extractAccessToken } from "../extract-access-token";
+import { IdentityConfigService } from "../infrastructure/identity-config.service";
 import type { AuthenticatedRequest } from "../identity.types";
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
-  private readonly config = loadAuthRuntimeConfig();
-
-  constructor(private readonly auth: AuthIntrospectionClient) {}
+  constructor(
+    private readonly sessions: SessionService,
+    private readonly identities: IdentityService,
+    private readonly config: IdentityConfigService,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
     const token = extractAccessToken({
       cookieHeader: request.headers.cookie,
       authorization: request.headers.authorization,
-      cookieName: this.config.cookie.session,
+      cookieName: this.config.values.cookie.session,
     });
     if (!token) {
       throw new UnauthorizedException();
     }
 
-    try {
-      request.auth = await this.auth.introspect(token);
-    } catch (error) {
-      if (error instanceof Error && error.message === "auth_unavailable") {
-        throw new ServiceUnavailableException();
-      }
+    const session = await this.sessions.getByToken(token);
+    if (!session) {
       throw new UnauthorizedException();
     }
 
+    const identity = await this.identities.getById(session.userId);
+    if (!identity || identity.status !== "active") {
+      throw new UnauthorizedException();
+    }
+
+    request.user = { userId: identity.id, phone: identity.phoneNumber };
     return true;
   }
 }

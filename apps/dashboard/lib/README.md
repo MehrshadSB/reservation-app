@@ -1,3 +1,3 @@
 # Lib
 
-API client, auth session, and tenant hostname helpers for this app only.
+API client, session helpers, and tenant hostname helpers for this app only.

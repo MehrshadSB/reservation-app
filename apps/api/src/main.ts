@@ -10,8 +10,7 @@ async function bootstrap(): Promise<void> {
     origin: config.allowedRedirectOrigins,
     credentials: true,
   });
-  const port = config.apiPort;
-  await app.listen(port);
+  await app.listen(config.apiPort);
 }
 
 void bootstrap();

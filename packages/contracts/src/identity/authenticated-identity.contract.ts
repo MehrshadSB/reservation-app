@@ -4,9 +4,7 @@
  */
 export type IdentityStatus = "active" | "disabled";
 
-export type AuthenticatedIdentity = {
-  identityId: string;
-  systemUserId: string;
-  phoneNumber: string;
-  status: IdentityStatus;
+export type AuthenticatedUser = {
+  userId: string;
+  phone: string;
 };

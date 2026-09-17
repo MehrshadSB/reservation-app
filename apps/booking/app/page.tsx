@@ -1,40 +1,39 @@
 import { cookies } from "next/headers";
 import { Button } from "@repo/ui";
-import { getAuthUrl, getLoginUrl, getLogoutUrl, SESSION_COOKIE } from "../lib/sso";
+import type { CurrentUserResponse } from "@repo/contracts/identity";
+import { SignOutButton } from "../components/sign-out-button";
+import { getApiUrl, getLoginPath, SESSION_COOKIE } from "../lib/auth";
 
-async function loadPhone(): Promise<string | undefined> {
+async function loadCurrentUser(): Promise<CurrentUserResponse | undefined> {
   const jar = await cookies();
   const token = jar.get(SESSION_COOKIE)?.value;
   if (!token) {
     return undefined;
   }
-  const response = await fetch(`${getAuthUrl()}/v1/sessions/current`, {
+  const response = await fetch(`${getApiUrl()}/v1/me`, {
     headers: { cookie: `${SESSION_COOKIE}=${token}` },
     cache: "no-store",
   });
   if (!response.ok) {
     return undefined;
   }
-  const body = (await response.json()) as { identity: { phoneNumber: string } };
-  return body.identity.phoneNumber;
+  return (await response.json()) as CurrentUserResponse;
 }
 
 export default async function Home() {
-  const phone = await loadPhone();
-  const loginUrl = getLoginUrl("http://localhost:3001/");
-  const logoutUrl = getLogoutUrl("http://localhost:3001/");
+  const current = await loadCurrentUser();
 
   return (
     <main>
       <h1>Booking</h1>
       <p>Public-facing booking application for customers.</p>
-      {phone ? (
+      {current ? (
         <p>
-          Signed in as {phone}. <a href={logoutUrl}>Sign out</a>
+          Signed in as {current.user.phone}. <SignOutButton />
         </p>
       ) : (
         <p>
-          <a href={loginUrl}>Sign in with phone</a>
+          <a href={getLoginPath("/")}>Sign in with phone</a>
         </p>
       )}
       <Button appName="booking">Click me</Button>

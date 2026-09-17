@@ -6,15 +6,18 @@ import {
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
 import type { Permission } from "@repo/contracts/authorization";
-import { can } from "../can";
+import { AuthorizationService } from "../application/authorization.service";
 import { PERMISSION_METADATA } from "../decorators/require-permission.decorator";
 import type { AuthenticatedRequest } from "../identity.types";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {}
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly authorization: AuthorizationService,
+  ) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const permission = this.reflector.getAllAndOverride<Permission | undefined>(
       PERMISSION_METADATA,
       [context.getHandler(), context.getClass()],
@@ -24,8 +27,8 @@ export class AuthorizationGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest<AuthenticatedRequest>();
-    const auth = request.auth;
-    if (!auth) {
+    const user = request.user;
+    if (!user) {
       throw new ForbiddenException();
     }
 
@@ -34,28 +37,17 @@ export class AuthorizationGuard implements CanActivate {
       ? organizationIdHeader[0]
       : organizationIdHeader;
 
-    const allowedWithoutOrg = can({
-      context: auth.authorization,
-      permission,
-    });
-    if (allowedWithoutOrg) {
-      return true;
-    }
-
     if (!organizationId) {
       throw new ForbiddenException();
     }
 
-    const allowed = can({
-      context: auth.authorization,
-      permission,
-      organizationId,
-    });
+    const tenant = { organizationId };
+    const allowed = await this.authorization.can(user, permission, tenant);
     if (!allowed) {
       throw new ForbiddenException();
     }
 
-    request.tenantId = organizationId;
+    request.tenant = tenant;
     return true;
   }
 }

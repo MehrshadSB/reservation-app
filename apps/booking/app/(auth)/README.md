@@ -1,5 +1,4 @@
-# Customer auth
+# Auth routes
 
-Optional customer login is handled by `apps/auth` (same Identity as staff).
-Guest checkout can live alongside this group. Do not implement a second OTP
-flow here.
+Phone OTP sign-in is handled by this app against `apps/api`. Guest checkout
+can live alongside this group. Do not implement a second OTP flow here.
