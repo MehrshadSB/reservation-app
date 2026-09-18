@@ -1,3 +1,4 @@
 # Auth routes
 
-Sign-in, password reset, and staff invites for a tenant.
+Phone OTP sign-in is handled by this app against `apps/api`. This group is
+reserved for post-login callbacks or tenant-specific invite landing pages.

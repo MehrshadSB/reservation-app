@@ -7,6 +7,8 @@ Import a domain slice, not the whole package:
 ```ts
 import type { CreateBookingRequest } from "@repo/contracts/booking";
 import type { CreateTravelBookingRequest } from "@repo/contracts/travel";
+import type { AuthenticatedIdentity } from "@repo/contracts/identity";
+import { can, PERMISSIONS } from "@repo/contracts/authorization";
 ```
 
 ## What belongs here

@@ -1,7 +1,13 @@
 # Identity
 
-Authentication, platform/staff users, roles, and permissions.
+Authentication and authorization for the API process.
 
-Flat Nest module. Staff accounts that operate a tenant belong here.
-End customers who book belong in `customer/`. Organization membership
-is coordinated with `organization/`.
+```text
+Phone → OTP → Identity → Session cookie
+Authenticated user → organization membership → role → permission
+```
+
+Staff routes use `@UseGuards(AuthenticationGuard, AuthorizationGuard)` and
+`@RequirePermission(PERMISSIONS.BOOKING_CONFIRM)`. Send `x-organization-id`
+for the tenant. Other modules should depend on `AuthenticatedUser` and
+`TenantContext`, not OTP or session storage.

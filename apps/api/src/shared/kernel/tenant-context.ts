@@ -1,9 +1,15 @@
 /**
- * Request-scoped tenant boundary.
+ * Which organization this request is operating in.
  *
- * Every use case in the API runs inside an organization/tenant context.
- * Persistence details are intentionally not defined yet.
+ * Identity, roles, and permissions are not stored here.
  */
 export type TenantContext = {
-  tenantId: string;
+  organizationId: string;
 };
+
+export function isResourceInTenant(
+  resourceOrganizationId: string,
+  tenant: TenantContext,
+): boolean {
+  return resourceOrganizationId === tenant.organizationId;
+}

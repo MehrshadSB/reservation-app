@@ -1,10 +1,10 @@
 # Database schema
 
-Canonical schema files will live here once a persistence library is chosen.
+Canonical Drizzle tables live in `src/schema`. Generate or edit SQL under
+`drizzle/` — do not put schema definitions inside API modules.
 
-Do not put schema definitions inside individual API modules. Modules own
-domain rules; this package owns the shared persistence contract and the
-tenant isolation strategy.
+`users` and `user_profiles` are platform-scoped. Tenant-owned tables must
+include `organization_id` and always filter by it.
 
 Industry-specific tables (housekeeping, patient intake, vehicle mileage)
 should be added later as extension tables, not as columns on core booking

@@ -1,4 +1,4 @@
-# Customer auth
+# Auth routes
 
-Optional customer login (accounts, past bookings). Guest checkout can live
-alongside this group.
+Phone OTP sign-in is handled by this app against `apps/api`. Guest checkout
+can live alongside this group. Do not implement a second OTP flow here.

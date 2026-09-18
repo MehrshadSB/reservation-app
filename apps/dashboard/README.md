@@ -4,7 +4,8 @@ Tenant staff application: bookings, resources, services, customers, and settings
 
 ## Structure
 
-- `app/(auth)` — sign-in and invite flows
+- `app/login` — phone OTP sign-in against `apps/api`
+- `app/(auth)` — post-login callbacks or invite landing pages
 - `app/(app)` — authenticated tenant workspace
 - `components` — screens and widgets used only by this app
 - `lib` — API client and session helpers

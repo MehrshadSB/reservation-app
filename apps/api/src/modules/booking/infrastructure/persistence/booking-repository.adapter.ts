@@ -8,6 +8,7 @@ export class BookingRepositoryAdapter implements BookingRepository {
     tenantId: string,
     bookingId: string,
   ): Promise<Booking | null> {
+    // Queries must include organizationId (tenantId). Never look up by id alone.
     void tenantId;
     void bookingId;
     throw new Error("BookingRepositoryAdapter is not implemented yet");

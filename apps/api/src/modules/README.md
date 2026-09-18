@@ -56,7 +56,7 @@ modules/
 │   ├── infrastructure/
 │   └── presentation/
 ├── customer/
-├── identity/
+├── identity/                # phone OTP, sessions, organization RBAC
 ├── organization/
 ├── payment/
 ├── notification/
